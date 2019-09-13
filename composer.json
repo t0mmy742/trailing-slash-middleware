@@ -1,0 +1,34 @@
+{
+  "name": "t0mmy742/trailing-slash-middleware",
+  "description": "A PSR-15 middleware to remove trailing slash in URI",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Thomas LE BERRE",
+      "email": "t0mmy742@users.noreply.github.com"
+    }
+  ],
+  "minimum-stability": "stable",
+  "autoload": {
+    "psr-4": {
+      "t0mmy742\\Middleware\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "t0mmy742\\Tests\\Middleware\\":"tests"
+    }
+  },
+  "require": {
+    "php": "^7.3",
+    "psr/http-factory": "^1.0",
+    "psr/http-server-middleware": "^1.0"
+  },
+  "require-dev": {
+    "friendsofphp/php-cs-fixer": "^2.15",
+    "php-coveralls/php-coveralls": "^2.1",
+    "phpunit/phpunit": "^8.3",
+    "squizlabs/php_codesniffer": "^3.4"
+  }
+}
