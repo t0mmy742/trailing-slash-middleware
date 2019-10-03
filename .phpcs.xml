@@ -4,8 +4,10 @@
 
     <arg name="colors"/>
     <arg value="p"/>
+    <arg value="s"/>
 
     <rule ref="PSR12"/>
+    <rule ref="Generic.Arrays.DisallowLongArraySyntax"/>
 
     <file>src</file>
     <file>tests</file>
