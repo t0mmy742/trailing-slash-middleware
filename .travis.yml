@@ -10,7 +10,6 @@ php:
 env: COVERALLS_PARALLEL=true
 
 install:
-  - composer selfupdate -n
   - composer install -n
   - composer require --dev php-coveralls/php-coveralls:^2.2 -n
 
