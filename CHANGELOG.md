@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.3] - 2020-01-07
+### Changed
+- CHANGELOG ignored in .gitattributes file
+
 ## [1.0.2] - 2020-01-07
 ### Added
 - This CHANGELOG file
@@ -31,7 +35,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - First version
 
-[Unreleased]: https://github.com/t0mmy742/trailing-slash-middleware/compare/1.0.2...HEAD
+[Unreleased]: https://github.com/t0mmy742/trailing-slash-middleware/compare/1.0.3...HEAD
+[1.0.3]: https://github.com/t0mmy742/trailing-slash-middleware/compare/1.0.2...1.0.3
 [1.0.2]: https://github.com/t0mmy742/trailing-slash-middleware/compare/1.0.1...1.0.2
 [1.0.1]: https://github.com/t0mmy742/trailing-slash-middleware/compare/1.0.0...1.0.1
 [1.0.0]: https://github.com/t0mmy742/trailing-slash-middleware/releases/tag/1.0.0
