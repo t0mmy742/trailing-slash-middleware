@@ -1,7 +1,13 @@
 {
   "name": "t0mmy742/trailing-slash-middleware",
-  "description": "A PSR-15 middleware to remove trailing slash in URI",
   "type": "library",
+  "description": "A PSR-15 middleware to remove trailing slash in URI",
+  "keywords": [
+    "trailing",
+    "slash",
+    "middleware",
+    "PSR-15"
+  ],
   "license": "MIT",
   "authors": [
     {
@@ -9,7 +15,20 @@
       "email": "t0mmy742@users.noreply.github.com"
     }
   ],
-  "minimum-stability": "stable",
+  "require": {
+    "php": "^7.2",
+    "psr/http-factory": "^1.0",
+    "psr/http-server-middleware": "^1.0"
+  },
+  "require-dev": {
+    "php-coveralls/php-coveralls": "^2.1",
+    "phpstan/phpstan": "^0.12.4",
+    "phpunit/phpunit": "^8.5",
+    "squizlabs/php_codesniffer": "^3.5"
+  },
+  "config": {
+    "sort-packages": true
+  },
   "autoload": {
     "psr-4": {
       "t0mmy742\\Middleware\\": "src"
@@ -17,17 +36,18 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "t0mmy742\\Tests\\Middleware\\":"tests"
+      "t0mmy742\\Tests\\Middleware\\": "tests"
     }
   },
-  "require": {
-    "php": "^7.3",
-    "psr/http-factory": "^1.0",
-    "psr/http-server-middleware": "^1.0"
-  },
-  "require-dev": {
-    "php-coveralls/php-coveralls": "^2.1",
-    "phpunit/phpunit": "^8.3",
-    "squizlabs/php_codesniffer": "^3.5"
+  "minimum-stability": "stable",
+  "scripts": {
+    "test": [
+      "@phpunit",
+      "@phpcs",
+      "@phpstan"
+    ],
+    "phpunit": "phpunit",
+    "phpcs": "phpcs",
+    "phpstan": "phpstan analyse src --memory-limit=-1"
   }
 }

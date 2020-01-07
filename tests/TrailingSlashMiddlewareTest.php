@@ -65,7 +65,7 @@ class TrailingSlashMiddlewareTest extends TestCase
         $this->middleware = new TrailingSlashMiddleware($this->responseFactoryProphecy->reveal());
     }
 
-    public function testNoNeedTrim()
+    public function testNoNeedTrim(): void
     {
         $this->uriProphecy
             ->getPath()
@@ -81,7 +81,7 @@ class TrailingSlashMiddlewareTest extends TestCase
         $this->assertSame($this->responseProphecy->reveal(), $response);
     }
 
-    public function testHomeNoTrim()
+    public function testHomeNoTrim(): void
     {
         $this->uriProphecy
             ->getPath()
@@ -97,7 +97,7 @@ class TrailingSlashMiddlewareTest extends TestCase
         $this->assertSame($this->responseProphecy->reveal(), $response);
     }
 
-    public function testPostTrim()
+    public function testPostTrim(): void
     {
         $this->uriProphecy
             ->getPath()
@@ -128,7 +128,7 @@ class TrailingSlashMiddlewareTest extends TestCase
         $this->assertSame($this->responseProphecy->reveal(), $response);
     }
 
-    public function testGetTrim()
+    public function testGetTrim(): void
     {
         $this->uriProphecy
             ->getPath()

@@ -24,4 +24,4 @@ $middleware = new TrailingSlashMiddleware($responseFactory);
 ```
 
 If path does not contain trailing slash, or if it is home ('/'), it does nothing.
-Otherwise, if it is a GET request, it creates a new Response with a 301 Permanent Redirect to the new URI (if not post, just handle request with new URI).
+Otherwise, if it is a GET request, it creates a new Response with a 301 Permanent Redirect to the new URI (if is is not a GET request, it just handles request with new URI).
