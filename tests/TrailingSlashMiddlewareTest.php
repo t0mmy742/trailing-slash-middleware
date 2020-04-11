@@ -6,6 +6,7 @@ namespace t0mmy742\Tests\Middleware;
 
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -16,6 +17,8 @@ use t0mmy742\Middleware\TrailingSlashMiddleware;
 
 class TrailingSlashMiddlewareTest extends TestCase
 {
+    use ProphecyTrait;
+
     /**
      * @var ObjectProphecy
      */

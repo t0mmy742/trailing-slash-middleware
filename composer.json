@@ -16,13 +16,15 @@
     }
   ],
   "require": {
-    "php": "^7.2",
+    "php": "^7.3",
     "psr/http-factory": "^1.0",
     "psr/http-server-middleware": "^1.0"
   },
   "require-dev": {
-    "phpstan/phpstan": "^0.12.4",
-    "phpunit/phpunit": "^8.5",
+    "phpspec/prophecy": "^1.10",
+    "phpspec/prophecy-phpunit": "^2.0",
+    "phpstan/phpstan": "^0.12.18",
+    "phpunit/phpunit": "^9.1",
     "squizlabs/php_codesniffer": "^3.5"
   },
   "config": {
