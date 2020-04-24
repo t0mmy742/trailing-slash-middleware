@@ -6,13 +6,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.5] - 2020-04-25
+### Changed
+- Tests now use Slim PSR-7 implementation
+
 ## [1.0.4] - 2020-04-11
 ### Removed
 - PHP 7.2 support (PHPUnit 9 support only PHP ^7.3)
 
 ### Fixed
 - `phpspec/prophecy` added as dependency with `phpspec/prophecy-phpunit` to respect PHPUnit deprecations
-
 
 ## [1.0.3] - 2020-01-07
 ### Changed
@@ -43,7 +46,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - First version
 
-[Unreleased]: https://github.com/t0mmy742/trailing-slash-middleware/compare/1.0.4...HEAD
+[Unreleased]: https://github.com/t0mmy742/trailing-slash-middleware/compare/1.0.5...HEAD
+[1.0.5]: https://github.com/t0mmy742/trailing-slash-middleware/compare/1.0.4...1.0.5
 [1.0.4]: https://github.com/t0mmy742/trailing-slash-middleware/compare/1.0.3...1.0.4
 [1.0.3]: https://github.com/t0mmy742/trailing-slash-middleware/compare/1.0.2...1.0.3
 [1.0.2]: https://github.com/t0mmy742/trailing-slash-middleware/compare/1.0.1...1.0.2

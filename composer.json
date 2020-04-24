@@ -18,14 +18,18 @@
   "require": {
     "php": "^7.3",
     "psr/http-factory": "^1.0",
+    "psr/http-message": "^1.0",
+    "psr/http-server-handler": "^1.0",
     "psr/http-server-middleware": "^1.0"
   },
   "require-dev": {
     "phpspec/prophecy": "^1.10",
     "phpspec/prophecy-phpunit": "^2.0",
-    "phpstan/phpstan": "^0.12.18",
+    "phpstan/phpstan": "^0.12.19",
     "phpunit/phpunit": "^9.1",
-    "squizlabs/php_codesniffer": "^3.5"
+    "slim/psr7": "^1.0",
+    "squizlabs/php_codesniffer": "^3.5",
+    "t0mmy742/middleware-dispatcher": "^1.0"
   },
   "config": {
     "sort-packages": true
@@ -40,7 +44,6 @@
       "t0mmy742\\Tests\\Middleware\\": "tests"
     }
   },
-  "minimum-stability": "stable",
   "scripts": {
     "test": [
       "@phpunit",
