@@ -1,7 +1,9 @@
-.idea
-.phpunit.result.cache
-composer.lock
-phpcs.xml
-phpstan.neon
-phpunit.xml
-vendor
+/.idea/
+/.phpunit.cache/
+/build/
+/vendor/
+/.phpunit.result.cache
+/composer.lock
+/phpcs.xml
+/phpstan.neon
+/phpunit.xml

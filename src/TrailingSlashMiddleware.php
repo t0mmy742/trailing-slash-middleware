@@ -14,7 +14,7 @@ use function substr;
 
 class TrailingSlashMiddleware implements MiddlewareInterface
 {
-    private $responseFactory;
+    private ResponseFactoryInterface $responseFactory;
 
     public function __construct(ResponseFactoryInterface $responseFactory)
     {

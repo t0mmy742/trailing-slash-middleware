@@ -5,93 +5,193 @@ declare(strict_types=1);
 namespace t0mmy742\Tests\Middleware;
 
 use PHPUnit\Framework\TestCase;
-use Prophecy\PhpUnit\ProphecyTrait;
-use Prophecy\Prophecy\ObjectProphecy;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Message\UriInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Slim\Psr7\Factory\ServerRequestFactory;
-use Slim\Psr7\Factory\StreamFactory;
-use Slim\Psr7\Response;
 use t0mmy742\Middleware\TrailingSlashMiddleware;
-use t0mmy742\MiddlewareDispatcher\MiddlewareDispatcher;
 
 class TrailingSlashMiddlewareTest extends TestCase
 {
-    use ProphecyTrait;
-
-    /**
-     * @var MiddlewareDispatcher
-     */
-    private $middlewareDispatcher;
-
-    /**
-     * @var ObjectProphecy|ResponseFactoryInterface
-     */
-    private $responseFactoryProphecy;
-
-    /**
-     * @var ResponseInterface
-     */
-    private $response;
-
-    private function createRequest(string $method, string $uri): ServerRequestInterface
-    {
-        return (new ServerRequestFactory())->createServerRequest($method, $uri);
-    }
-
-    protected function setUp(): void
-    {
-        $this->middlewareDispatcher = new MiddlewareDispatcher();
-        $this->responseFactoryProphecy = $this->prophesize(ResponseFactoryInterface::class);
-        $this->response = new Response();
-
-        $this->middlewareDispatcher->addMiddleware(
-            new TrailingSlashMiddleware($this->responseFactoryProphecy->reveal())
-        );
-        $this->middlewareDispatcher->addCallable(
-            function (ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface {
-                $stream = (new StreamFactory())->createStream((string) $request->getUri());
-                return $this->response->withBody($stream);
-            }
-        );
-    }
-
     public function testNoNeedTrim(): void
     {
-        $request = $this->createRequest('GET', '/testWithoutTrailingSlash');
+        $path = '/testWithoutTrailingSlash';
 
-        $responseResult = $this->middlewareDispatcher->handle($request);
+        $responseFactory = $this->createStub(ResponseFactoryInterface::class);
+        $uri = $this->createMock(UriInterface::class);
+        $serverRequest = $this->createMock(ServerRequestInterface::class);
+        $requestHandler = $this->createMock(RequestHandlerInterface::class);
 
-        $this->assertSame('/testWithoutTrailingSlash', (string) $responseResult->getBody());
+        $uri
+            ->expects($this->exactly(2))
+            ->method('getPath')
+            ->willReturn($path);
+
+        $serverRequest
+            ->expects($this->exactly(2))
+            ->method('getUri')
+            ->willReturn($uri);
+
+        $requestHandler
+            ->expects($this->once())
+            ->method('handle')
+            ->with($serverRequest)
+            ->willReturnCallback(function (ServerRequestInterface $request): ResponseInterface {
+                $this->assertSame('/testWithoutTrailingSlash', $request->getUri()->getPath());
+
+                return $this->createStub(ResponseInterface::class);
+            });
+
+        (new TrailingSlashMiddleware($responseFactory))->process($serverRequest, $requestHandler);
     }
 
     public function testHomeNoTrim(): void
     {
-        $request = $this->createRequest('GET', '/');
+        $path = '/';
 
-        $responseResult = $this->middlewareDispatcher->handle($request);
+        $responseFactory = $this->createStub(ResponseFactoryInterface::class);
+        $uri = $this->createMock(UriInterface::class);
+        $serverRequest = $this->createMock(ServerRequestInterface::class);
+        $requestHandler = $this->createMock(RequestHandlerInterface::class);
 
-        $this->assertSame('/', (string) $responseResult->getBody());
+        $uri
+            ->expects($this->exactly(2))
+            ->method('getPath')
+            ->willReturn($path);
+
+        $serverRequest
+            ->expects($this->exactly(2))
+            ->method('getUri')
+            ->willReturn($uri);
+
+        $requestHandler
+            ->expects($this->once())
+            ->method('handle')
+            ->with($serverRequest)
+            ->willReturnCallback(function (ServerRequestInterface $request): ResponseInterface {
+                $this->assertSame('/', $request->getUri()->getPath());
+
+                return $this->createStub(ResponseInterface::class);
+            });
+
+        (new TrailingSlashMiddleware($responseFactory))->process($serverRequest, $requestHandler);
     }
 
     public function testPostTrim(): void
     {
-        $request = $this->createRequest('POST', '/test/');
+        $method = 'POST';
+        $path = '/test/';
 
-        $responseResult = $this->middlewareDispatcher->handle($request);
+        $responseFactory = $this->createStub(ResponseFactoryInterface::class);
+        $uri = $this->createMock(UriInterface::class);
+        $uri2 = $this->createMock(UriInterface::class);
+        $serverRequest = $this->createMock(ServerRequestInterface::class);
+        $requestHandler = $this->createMock(RequestHandlerInterface::class);
 
-        $this->assertSame('/test', (string) $responseResult->getBody());
+        $uri
+            ->expects($this->once())
+            ->method('getPath')
+            ->willReturn($path);
+        $uri
+            ->expects($this->once())
+            ->method('withPath')
+            ->with('/test')
+            ->willReturnCallback(function (string $path) use ($uri2): UriInterface {
+                $uri2
+                    ->expects($this->once())
+                    ->method('getPath')
+                    ->willReturn($path);
+                return $uri2;
+            });
+
+        $serverRequest
+            ->expects($this->once())
+            ->method('getMethod')
+            ->willReturn($method);
+        $serverRequest
+            ->expects($this->once())
+            ->method('getUri')
+            ->willReturn($uri);
+        $serverRequest
+            ->expects($this->once())
+            ->method('withUri')
+            ->willReturnCallback(function (UriInterface $uri): ServerRequestInterface {
+                $serverRequest2 = $this->createMock(ServerRequestInterface::class);
+                $serverRequest2
+                    ->expects($this->once())
+                    ->method('getUri')
+                    ->willReturn($uri);
+
+                return $serverRequest2;
+            });
+
+        $requestHandler
+            ->expects($this->once())
+            ->method('handle')
+            ->with($serverRequest)
+            ->willReturnCallback(function (ServerRequestInterface $request): ResponseInterface {
+                $this->assertSame('/test', $request->getUri()->getPath());
+
+                return $this->createStub(ResponseInterface::class);
+            });
+
+        (new TrailingSlashMiddleware($responseFactory))->process($serverRequest, $requestHandler);
     }
 
     public function testGetTrim(): void
     {
-        $this->responseFactoryProphecy->createResponse(301)->shouldBeCalledOnce()->willReturn($this->response);
-        $request = $this->createRequest('GET', '/test/');
+        $method = 'GET';
+        $path = '/test/';
 
-        $responseResult = $this->middlewareDispatcher->handle($request);
+        $responseFactory = $this->createMock(ResponseFactoryInterface::class);
+        $uri = $this->createMock(UriInterface::class);
+        $uri2 = $this->createMock(UriInterface::class);
+        $serverRequest = $this->createMock(ServerRequestInterface::class);
+        $requestHandler = $this->createStub(RequestHandlerInterface::class);
+        $response = $this->createMock(ResponseInterface::class);
 
-        $this->assertSame('/test', (string) $responseResult->getHeader('Location')[0]);
+        $uri
+            ->expects($this->once())
+            ->method('getPath')
+            ->willReturn($path);
+        $uri
+            ->expects($this->once())
+            ->method('withPath')
+            ->with('/test')
+            ->willReturnCallback(function (string $path) use ($uri2): UriInterface {
+                $uri2
+                    ->expects($this->once())
+                    ->method('__toString')
+                    ->willReturn($path);
+                return $uri2;
+            });
+
+        $serverRequest
+            ->expects($this->once())
+            ->method('getMethod')
+            ->willReturn($method);
+        $serverRequest
+            ->expects($this->once())
+            ->method('getUri')
+            ->willReturn($uri);
+
+        $responseFactory
+            ->expects($this->once())
+            ->method('createResponse')
+            ->with(301)
+            ->willReturn($response);
+
+        $response
+            ->expects($this->once())
+            ->method('withHeader')
+            ->with('Location', $this->isType('string'))
+            ->willReturnCallback(function (string $name, $value) {
+                $this->assertSame('/test', $value);
+
+                return $this->createStub(ResponseInterface::class);
+            });
+
+        (new TrailingSlashMiddleware($responseFactory))->process($serverRequest, $requestHandler);
     }
 }

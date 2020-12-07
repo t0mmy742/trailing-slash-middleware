@@ -1,6 +1,6 @@
 # Trailing Slash Middleware (PSR-15)
 
-[![Build Status](https://travis-ci.org/t0mmy742/trailing-slash-middleware.svg?branch=master)](https://travis-ci.org/t0mmy742/trailing-slash-middleware)
+[![Tests](https://github.com/t0mmy742/trailing-slash-middleware/workflows/Tests/badge.svg?branch=master)](https://github.com/t0mmy742/trailing-slash-middleware/actions?query=branch:master)
 [![Coverage Status](https://coveralls.io/repos/github/t0mmy742/trailing-slash-middleware/badge.svg?branch=master)](https://coveralls.io/github/t0mmy742/trailing-slash-middleware?branch=master)
 
 This middleware remove trailing slash from URI.
